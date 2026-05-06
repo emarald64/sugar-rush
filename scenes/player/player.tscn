@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bbblyv3dtttqm"]
+
+[ext_resource type="Script" uid="uid://blo06weo1i3mm" path="res://scenes/player/player.gd" id="1_8afob"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8afob"]
+
+[node name="Player" type="CharacterBody2D" unique_id=2106077790]
+script = ExtResource("1_8afob")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1969216031]
+shape = SubResource("RectangleShape2D_dovo2")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=975667431]
+polygon = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[node name="Polygon2D" type="Polygon2D" parent="Polygon2D" unique_id=1750641103]
+color = Color(0.67, 0.67, 0.67, 1)
+polygon = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
+
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1088502800]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1822052198]
+shape = SubResource("RectangleShape2D_8afob")
