@@ -1,11 +1,140 @@
 [gd_scene format=3 uid="uid://bbblyv3dtttqm"]
 
 [ext_resource type="Script" uid="uid://blo06weo1i3mm" path="res://scenes/player/player.gd" id="1_8afob"]
+[ext_resource type="Texture2D" uid="uid://cnmy4gm0m2o6r" path="res://icon.svg" id="2_dovo2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dovo2"]
 size = Vector2(16, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_8afob"]
+[sub_resource type="Animation" id="Animation_8afob"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:animating")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Polygon2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_dovo2"]
+resource_name = "death"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("GPUParticles2D:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:animating")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Polygon2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.33),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1e-05, 1e-05)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"respawn"
+}]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("GPUParticles2D")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"restart"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gmlin"]
+_data = {
+&"RESET": SubResource("Animation_8afob"),
+&"death": SubResource("Animation_dovo2")
+}
+
+[sub_resource type="Gradient" id="Gradient_lvxji"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_p47bc"]
+gradient = SubResource("Gradient_lvxji")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_75vfm"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 10.0
+initial_velocity_max = 40.0
+gravity = Vector3(0, 0, 0)
 
 [node name="Player" type="CharacterBody2D" unique_id=2106077790]
 script = ExtResource("1_8afob")
@@ -21,9 +150,11 @@ color = Color(0.67, 0.67, 0.67, 1)
 polygon = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1088502800]
+collision_layer = 4
+collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1822052198]
-shape = SubResource("RectangleShape2D_8afob")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=862140016]
+shape = SubResource("RectangleShape2D_dovo2")
 
 [node name="coyoteTimer" type="Timer" parent="." unique_id=464071175]
 wait_time = 0.2
@@ -32,3 +163,28 @@ one_shot = true
 [node name="Freeze Direction Time" type="Timer" parent="." unique_id=856601518]
 wait_time = 0.1
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=922934692]
+libraries/ = SubResource("AnimationLibrary_gmlin")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="." unique_id=1349763802]
+emitting = false
+amount = 16
+texture = SubResource("GradientTexture2D_p47bc")
+lifetime = 0.65
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_75vfm")
+
+[node name="StartPos" type="Node2D" parent="." unique_id=152788183]
+top_level = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StartPos" unique_id=541611204]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_dovo2")
+
+[node name="wall jump leiency" type="Timer" parent="." unique_id=2086319245]
+wait_time = 0.2
+one_shot = true
+
+[connection signal="body_entered" from="Hurtbox" to="AnimationPlayer" method="play" unbinds=1 binds= [&"death"]]
