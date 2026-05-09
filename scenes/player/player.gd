@@ -7,9 +7,10 @@ const JUMP_ACCEL = -600.0
 const MAX_JUMP_TIME=.25
 const STOP_MULT=3;
 const MAX_FALL_SPEED=1000;
-const WALL_JUMP_VELOCITY=200;
+const WALL_JUMP_VELOCITY=Vector2(175,-300);
 const WALL_SLIDE_SPEED=75;
 
+var wall_normal:=0
 @export var animating:=false
 var jumpTime:=0.0
 var started_timer:=false
@@ -36,7 +37,7 @@ func _physics_process(delta: float) -> void:
 		hasJumped=false
 		started_timer=false
 		$coyoteTimer.stop()
-		$"wall jump leiency".stop()
+		#$"wall jump leiency".stop()
 		$"Freeze Direction Time".stop()
 			
 	# Handle jump.
@@ -59,22 +60,32 @@ func _physics_process(delta: float) -> void:
 		var direction := Input.get_axis("move_left", "move_right")
 		#print(direction)
 		if direction:
-			var into_wall=is_on_wall_only() and signf(get_wall_normal().x)==-signf(direction)
-			if (into_wall or not $"wall jump leiency".is_stopped()) and can_wall_jump:
-				if Input.is_action_just_pressed("jump"):
-					# wall jump
-					$"Freeze Direction Time".start()
-					velocity=Vector2(signf(get_wall_normal().x),-2)*WALL_JUMP_VELOCITY
-				elif into_wall:
-					# wall slide
-					$"wall jump leiency".start()
-					velocity.y=minf(velocity.y,WALL_SLIDE_SPEED)
+			if is_on_wall_only() and signf(get_wall_normal().x)==-signf(direction):
+				# wall slide
+				#$"wall jump leiency".start()a
+				velocity.y=minf(velocity.y,WALL_SLIDE_SPEED)
 			else:
 				velocity.x = clampf(velocity.x+(direction * ACCEL * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)),-MAX_SPEED,MAX_SPEED)
 		else:
 			velocity.x = move_toward(velocity.x, 0, ACCEL*delta*STOP_MULT)
 
+	if not is_on_floor():
+		wall_normal=get_wall_check_normal()
+		#print(wall_normal)
+		if wall_normal!=0 and can_wall_jump:
+			if Input.is_action_just_pressed("jump"):
+				# wall jump
+				$"Freeze Direction Time".start()
+				velocity=Vector2(wall_normal,1)*WALL_JUMP_VELOCITY
+
 	if not animating:move_and_slide()
+
+func get_wall_check_normal()->int:
+	if $"wall jump checks/left".has_overlapping_bodies():
+		return 1
+	if $"wall jump checks/right".has_overlapping_bodies(): 
+		return -1
+	return 0
 
 func respawn()->void:
 	global_position=current_cp.global_position
