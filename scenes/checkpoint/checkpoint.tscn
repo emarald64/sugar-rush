@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bd4tdut28lsa0"]
+
+[ext_resource type="Script" uid="uid://c8l8b5ef4dq7o" path="res://scenes/checkpoint/checkpoint.gd" id="1_qopk8"]
+[ext_resource type="Texture2D" uid="uid://bwumojiu0mh0g" path="res://assets/kenney_pixel-platformer/Tilemap/tilemap.png" id="2_2kgby"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sg1lo"]
+atlas = ExtResource("2_2kgby")
+region = Rect2(209, 95, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hacf6"]
+atlas = ExtResource("2_2kgby")
+region = Rect2(228, 95, 18, 18)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04dhy"]
+atlas = ExtResource("2_2kgby")
+region = Rect2(209, 114, 18, 18)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t5ejf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sg1lo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hacf6")
+}],
+"loop": true,
+"name": &"Up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04dhy")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5ghl"]
+size = Vector2(18, 18)
+
+[node name="Checkpoint" type="Area2D" unique_id=713426318]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_qopk8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1166721579]
+sprite_frames = SubResource("SpriteFrames_t5ejf")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=769467506]
+shape = SubResource("RectangleShape2D_i5ghl")
+
+[connection signal="body_entered" from="." to="." method="activate"]
