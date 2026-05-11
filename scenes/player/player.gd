@@ -1,9 +1,9 @@
 class_name Player extends CharacterBody2D
 
-const MAX_SPEED = 300.0
-const ACCEL = 600
+const MAX_SPEED = 250.0
+const ACCEL = 500
 const JUMP_VELOCITY = -200.0
-const JUMP_ACCEL = -600.0
+const JUMP_ACCEL = -800.0
 const MAX_JUMP_TIME=.25
 const STOP_MULT=3;
 const MAX_FALL_SPEED=1000;
@@ -17,13 +17,14 @@ var jumpTime:=0.0
 var started_timer:=false
 var hasJumped:=false
 @export var can_wall_jump:=true
+var deaths:=0
 
 @onready var current_cp:Node2D=$StartPos
 
 func _ready()->void:
 	$StartPos.position=global_position
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	$TextureProgressBar.value=$"sugar rush timer".time_left
 	$TextureProgressBar.tint_progress=Color.from_hsv($"sugar rush timer".time_left/6,1,1)
 
@@ -41,7 +42,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		hasJumped=false
 		started_timer=false
-		$coyoteTimer.stop()
+		#$coyoteTimer.stop()
 		#$"wall jump leiency".stop()
 		$"Freeze Direction Time".stop()
 			
@@ -50,6 +51,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y=min(JUMP_VELOCITY,velocity.y)
 		$coyoteTimer.stop()
 		hasJumped=true
+		started_timer=true
 		jumpTime=0
 	elif Input.is_action_pressed("jump") and jumpTime<MAX_JUMP_TIME and hasJumped:
 		velocity.y+=JUMP_ACCEL*delta
@@ -65,7 +67,7 @@ func _physics_process(delta: float) -> void:
 		var direction := Input.get_axis("move_left", "move_right")
 		#print(direction)
 		if direction:
-			if is_on_wall_only() and signf(get_wall_normal().x)==-signf(direction):
+			if is_on_wall_only() and signf(get_wall_normal().x)==-signf(direction) and can_wall_jump:
 				# wall slide
 				#$"wall jump leiency".start()a
 				velocity.y=minf(velocity.y,WALL_SLIDE_SPEED)
@@ -104,12 +106,16 @@ func respawn()->void:
 	$Polygon2D.scale=Vector2.ONE
 	velocity=Vector2.ZERO
 	get_tree().call_group(&"enable on respawn",&"enable")
+	deaths+=1
 	
-func pickup(pickup:Area2D)->void:
+	$Camera2D.align()
+	
+func on_pickup(pickup:Area2D)->void:
 	match pickup.get_meta(&"pickup"):
 		&"candy":
 			$"sugar rush timer".start()
 			$TextureProgressBar.show()
+			pickup.disable()
 
 func on_checkpoint()->void:
 	$"sugar rush timer".stop()
