@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cvw16ycg0vnrs"]
+
+[ext_resource type="Script" uid="uid://eb734frnoi3" path="res://scenes/pickup/pickup.gd" id="1_4yg4j"]
+[ext_resource type="Texture2D" uid="uid://xbaa346pk0dt" path="res://assets/candy.png" id="2_wktyk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7cqbe"]
+size = Vector2(18, 18)
+
+[node name="Pickup" type="Area2D" unique_id=394415085 groups=["enable on respawn"]]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_4yg4j")
+metadata/pickup = &"candy"
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=697170336]
+texture = ExtResource("2_wktyk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1527372332]
+shape = SubResource("RectangleShape2D_7cqbe")

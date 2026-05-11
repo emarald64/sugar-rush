@@ -9,22 +9,27 @@ const STOP_MULT=3;
 const MAX_FALL_SPEED=1000;
 const WALL_JUMP_VELOCITY=Vector2(175,-300);
 const WALL_SLIDE_SPEED=75;
+const SUGAR_RUSH_MULT=2
 
 var wall_normal:=0
 @export var animating:=false
 var jumpTime:=0.0
 var started_timer:=false
 var hasJumped:=false
-@export var can_wall_jump:=true;
+@export var can_wall_jump:=true
 
 @onready var current_cp:Node2D=$StartPos
 
 func _ready()->void:
 	$StartPos.position=global_position
 
+func _process(delta: float) -> void:
+	$TextureProgressBar.value=$"sugar rush timer".time_left
+	$TextureProgressBar.tint_progress=Color.from_hsv($"sugar rush timer".time_left/6,1,1)
+
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("respawn") and not animating:
-		$AnimationPlayer.play(&"death")
+		play_respawn_animation()
 	
 	if not is_on_floor():
 		#if $AnimatedSprite2D.frame==0 or jumpTime<maxJumpTime:$AnimatedSprite2D.frame=2
@@ -65,9 +70,9 @@ func _physics_process(delta: float) -> void:
 				#$"wall jump leiency".start()a
 				velocity.y=minf(velocity.y,WALL_SLIDE_SPEED)
 			else:
-				velocity.x = clampf(velocity.x+(direction * ACCEL * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)),-MAX_SPEED,MAX_SPEED)
+				velocity.x = clampf(velocity.x+(direction * ACCEL * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)) * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),-MAX_SPEED * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),MAX_SPEED * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
 		else:
-			velocity.x = move_toward(velocity.x, 0, ACCEL*delta*STOP_MULT)
+			velocity.x = move_toward(velocity.x, 0, ACCEL*delta*STOP_MULT * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
 
 	if not is_on_floor():
 		wall_normal=get_wall_check_normal()
@@ -87,7 +92,25 @@ func get_wall_check_normal()->int:
 		return -1
 	return 0
 
+func play_respawn_animation()->void:
+	$"sugar rush timer".paused=true
+	$AnimationPlayer.play(&"death")
+
 func respawn()->void:
+	$"sugar rush timer".paused=false
+	$"sugar rush timer".stop()
+	$TextureProgressBar.hide()
 	global_position=current_cp.global_position
 	$Polygon2D.scale=Vector2.ONE
 	velocity=Vector2.ZERO
+	get_tree().call_group(&"enable on respawn",&"enable")
+	
+func pickup(pickup:Area2D)->void:
+	match pickup.get_meta(&"pickup"):
+		&"candy":
+			$"sugar rush timer".start()
+			$TextureProgressBar.show()
+
+func on_checkpoint()->void:
+	$"sugar rush timer".stop()
+	$TextureProgressBar.hide()

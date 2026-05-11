@@ -26,6 +26,10 @@ window/stretch/scale_mode="integer"
 
 enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 
+[global_group]
+
+"enable on respawn"=""
+
 [input]
 
 jump={
@@ -57,6 +61,7 @@ respawn={
 2d_physics/layer_1="wall"
 2d_physics/layer_2="death"
 2d_physics/layer_3="player"
+2d_physics/layer_4="pickup"
 
 [physics]
 

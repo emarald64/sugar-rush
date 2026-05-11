@@ -139,6 +139,31 @@ gravity = Vector3(0, -50, 0)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
 size = Vector2(6, 14)
 
+[sub_resource type="Gradient" id="Gradient_8afob"]
+interpolation_mode = 1
+colors = PackedColorArray(0.24, 0.24, 0.24, 1, 0.24, 0.24, 0.24, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dovo2"]
+gradient = SubResource("Gradient_8afob")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[sub_resource type="Gradient" id="Gradient_gmlin"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.997151)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lvxji"]
+gradient = SubResource("Gradient_gmlin")
+width = 16
+height = 16
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
 [node name="Player" type="CharacterBody2D" unique_id=2106077790]
 collision_layer = 4
 script = ExtResource("1_8afob")
@@ -155,7 +180,7 @@ polygon = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 
 [node name="Hurtbox" type="Area2D" parent="." unique_id=1088502800]
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=862140016]
 shape = SubResource("RectangleShape2D_dovo2")
@@ -199,4 +224,22 @@ collision_layer = 0
 position = Vector2(11, 0)
 shape = SubResource("RectangleShape2D_gmlin")
 
-[connection signal="body_entered" from="Hurtbox" to="AnimationPlayer" method="play" unbinds=1 binds= [&"death"]]
+[node name="sugar rush timer" type="Timer" parent="." unique_id=1824299329]
+wait_time = 5.0
+one_shot = true
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1695372338]
+visible = false
+offset_left = -8.0
+offset_top = -26.0
+offset_right = 8.0
+offset_bottom = -10.0
+max_value = 5.0
+step = 0.0
+fill_mode = 4
+texture_under = SubResource("GradientTexture2D_dovo2")
+texture_progress = SubResource("GradientTexture2D_lvxji")
+
+[connection signal="area_entered" from="Hurtbox" to="." method="pickup"]
+[connection signal="body_entered" from="Hurtbox" to="." method="play_respawn_animation" unbinds=1]
+[connection signal="timeout" from="sugar rush timer" to="." method="play_respawn_animation"]

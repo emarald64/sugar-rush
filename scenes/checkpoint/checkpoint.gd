@@ -3,6 +3,7 @@ class_name Checkpoint extends Area2D
 var active:=false;
 
 func activate(player: Player) -> void:
+	player.on_checkpoint()
 	if not active:
 		var old_cp=player.current_cp
 		if old_cp is Checkpoint:
