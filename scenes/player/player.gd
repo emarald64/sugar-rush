@@ -2,12 +2,12 @@ class_name Player extends CharacterBody2D
 
 const MAX_SPEED = 250.0
 const ACCEL = 500
-const JUMP_VELOCITY = -200.0
-const JUMP_ACCEL = -800.0
-const MAX_JUMP_TIME=.25
+const JUMP_VELOCITY = -250.0
+const JUMP_ACCEL = -950.0
+const MAX_JUMP_TIME=.3
 const STOP_MULT=3;
 const MAX_FALL_SPEED=1000;
-const WALL_JUMP_VELOCITY=Vector2(175,-300);
+const WALL_JUMP_VELOCITY=Vector2(150,-400);
 const WALL_SLIDE_SPEED=75;
 const SUGAR_RUSH_MULT=2
 
@@ -101,6 +101,7 @@ func play_respawn_animation()->void:
 func respawn()->void:
 	$"sugar rush timer".paused=false
 	$"sugar rush timer".stop()
+	#$TextureProgressBar.scale=Vector2.ONE
 	$TextureProgressBar.hide()
 	global_position=current_cp.global_position
 	$Polygon2D.scale=Vector2.ONE

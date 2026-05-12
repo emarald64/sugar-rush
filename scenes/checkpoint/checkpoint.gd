@@ -4,6 +4,7 @@ var active:=false;
 
 func activate(player: Player) -> void:
 	player.on_checkpoint()
+	get_tree().call_group(&"enable on respawn",&"enable")
 	if not active:
 		var old_cp=player.current_cp
 		if old_cp is Checkpoint:
