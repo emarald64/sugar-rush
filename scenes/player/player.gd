@@ -117,6 +117,10 @@ func on_pickup(pickup:Area2D)->void:
 			$"sugar rush timer".start()
 			$TextureProgressBar.show()
 			pickup.disable()
+		&"end":
+			animating=true
+			var popup=preload("res://scenes/level end popup/level_end_popup.tscn").instantiate()
+			get_parent().add_child(popup)
 
 func on_checkpoint()->void:
 	$"sugar rush timer".stop()

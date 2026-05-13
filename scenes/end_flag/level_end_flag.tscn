@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://c620jxgud1atm"]
+
+[ext_resource type="Script" uid="uid://8u3pymdtf6s" path="res://scenes/end_flag/level_end_flag.gd" id="1_np8j1"]
+[ext_resource type="Texture2D" uid="uid://bgom1an1xk87y" path="res://assets/flag-dither.png" id="2_125hf"]
+[ext_resource type="Texture2D" uid="uid://c3emc7kev6c1k" path="res://assets/checker.png" id="3_cvk0j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_np8j1"]
+size = Vector2(16, 32)
+
+[node name="Level end flag" type="Area2D" unique_id=1014479058]
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_np8j1")
+metadata/pickup = &"end"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1259893382]
+shape = SubResource("RectangleShape2D_np8j1")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1968808943]
+clip_children = 1
+texture_filter = 1
+texture = ExtResource("2_125hf")
+
+[node name="Checker" type="Sprite2D" parent="Sprite2D3" unique_id=1912149117]
+unique_name_in_owner = true
+texture_filter = 1
+texture_repeat = 2
+scale = Vector2(8, 8)
+texture = ExtResource("3_cvk0j")
+region_enabled = true
+region_rect = Rect2(0, 0, 4, 8)

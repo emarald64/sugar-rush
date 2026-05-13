@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://xk3x40vyamtr"]
+
+[ext_resource type="FontFile" uid="uid://dhumwnibuj13y" path="res://assets/Kenney Pixel.ttf" id="1_05wk3"]
+[ext_resource type="Script" uid="uid://bmq71jyyvbj8d" path="res://scenes/title/title_screen.gd" id="1_ynr0n"]
+
+[node name="Title Screen" type="ColorRect" unique_id=1700240834]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.42, 0.2688, 0.34188002, 1)
+script = ExtResource("1_ynr0n")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1030764624]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 28.0
+offset_right = -28.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=2137879027]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("1_05wk3")
+theme_override_font_sizes/font_size = 64
+text = "Sugar Rush"
+
+[node name="Spacer" type="Control" parent="VBoxContainer" unique_id=2076824011]
+custom_minimum_size = Vector2(0, 24)
+layout_mode = 2
+
+[node name="levels" type="GridContainer" parent="VBoxContainer" unique_id=1125918774]
+layout_mode = 2
+columns = 5
+
+[node name="1" type="Button" parent="VBoxContainer/levels" unique_id=1359384328]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_05wk3")
+theme_override_font_sizes/font_size = 32
+text = "1"
+
+[connection signal="pressed" from="VBoxContainer/levels/1" to="." method="load_level" binds= [1]]
