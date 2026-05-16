@@ -1,7 +1,7 @@
 class_name Player extends CharacterBody2D
 
-const MAX_SPEED = 250.0
-const ACCEL = 500
+const MAX_SPEED = 225.0
+const ACCEL = 450
 const JUMP_VELOCITY = -250.0
 const JUMP_ACCEL = -950.0
 const MAX_JUMP_TIME=.3
@@ -9,7 +9,7 @@ const STOP_MULT=3;
 const MAX_FALL_SPEED=1000;
 const WALL_JUMP_VELOCITY=Vector2(150,-400);
 const WALL_SLIDE_SPEED=75;
-const SUGAR_RUSH_MULT=2
+const SUGAR_RUSH_MULT=1.75
 
 var wall_normal:=0
 @export var animating:=false
@@ -18,6 +18,7 @@ var started_timer:=false
 var hasJumped:=false
 @export var can_wall_jump:=true
 var deaths:=0
+@onready var start_time:=Time.get_ticks_msec()
 
 @onready var current_cp:Node2D=$StartPos
 
@@ -120,6 +121,8 @@ func on_pickup(pickup:Area2D)->void:
 		&"end":
 			animating=true
 			var popup=preload("res://scenes/level end popup/level_end_popup.tscn").instantiate()
+			popup.deaths=deaths
+			popup.time_ms=Time.get_ticks_msec()-start_time
 			get_parent().add_child(popup)
 
 func on_checkpoint()->void:

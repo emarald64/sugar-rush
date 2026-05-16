@@ -266,10 +266,12 @@ texture_under = SubResource("GradientTexture2D_dovo2")
 texture_progress = SubResource("GradientTexture2D_lvxji")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1065082198]
+offset = Vector2(16, 0)
 limit_enabled = false
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
 drag_vertical_offset = -0.5
+drag_right_margin = 0.1
 drag_bottom_margin = 0.5
 
 [connection signal="area_entered" from="Hurtbox" to="." method="on_pickup"]

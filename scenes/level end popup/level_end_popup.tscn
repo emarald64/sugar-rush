@@ -10,7 +10,8 @@ Label/fonts/font = ExtResource("1_v1m66")
 [node name="Level End Popup" type="PopupPanel" unique_id=991931108]
 oversampling_override = 1.0
 title = "Level Compleate"
-size = Vector2i(248, 80)
+initial_position = 1
+size = Vector2i(248, 96)
 visible = true
 theme = SubResource("Theme_bmxg3")
 script = ExtResource("2_bmxg3")
@@ -19,13 +20,16 @@ script = ExtResource("2_bmxg3")
 offset_left = 4.0
 offset_top = 4.0
 offset_right = 244.0
-offset_bottom = 76.0
+offset_bottom = 92.0
 
 [node name="Label" type="Label" parent="VBoxContainer" unique_id=1912259180]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 text = "Level Complete!"
 horizontal_alignment = 1
+
+[node name="Counters" type="Label" parent="VBoxContainer" unique_id=376579435]
+layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1724874632]
 layout_mode = 2
@@ -43,3 +47,4 @@ theme_override_font_sizes/font_size = 32
 text = "Next"
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Level Select" to="." method="level_select"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Next Level" to="." method="next_level"]

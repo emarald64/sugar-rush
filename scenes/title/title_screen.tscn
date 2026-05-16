@@ -35,12 +35,23 @@ layout_mode = 2
 
 [node name="levels" type="GridContainer" parent="VBoxContainer" unique_id=1125918774]
 layout_mode = 2
+theme_override_constants/h_separation = 16
 columns = 5
 
 [node name="1" type="Button" parent="VBoxContainer/levels" unique_id=1359384328]
+custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_05wk3")
 theme_override_font_sizes/font_size = 32
 text = "1"
 
-[connection signal="pressed" from="VBoxContainer/levels/1" to="." method="load_level" binds= [1]]
+[node name="2" type="Button" parent="VBoxContainer/levels" unique_id=1374001166]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_05wk3")
+theme_override_font_sizes/font_size = 32
+text = "2
+"
+
+[connection signal="pressed" from="VBoxContainer/levels/1" to="." method="load_level" flags=18]
+[connection signal="pressed" from="VBoxContainer/levels/2" to="." method="load_level" flags=18]
