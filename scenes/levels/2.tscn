@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://bd4tdut28lsa0" path="res://scenes/checkpoint/checkpoint.tscn" id="3_kt1qv"]
 [ext_resource type="PackedScene" uid="uid://cvw16ycg0vnrs" path="res://scenes/pickup/pickup.tscn" id="4_fnalb"]
 [ext_resource type="PackedScene" uid="uid://bbblyv3dtttqm" path="res://scenes/player/player.tscn" id="5_sipdq"]
-[ext_resource type="PackedScene" uid="uid://c620jxgud1atm" path="res://scenes/end_flag/level_end_flag.tscn" id="7_hakhg"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_6q06x"]
 tile_data = PackedInt32Array(0, 589825, 2, 65536, 589825, 3)
@@ -484,6 +483,3 @@ collision_mask = 0
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="Death Plane" unique_id=1600860914]
 position = Vector2(91, 80)
 shape = SubResource("WorldBoundaryShape2D_mp0kl")
-
-[node name="Level end flag" parent="." unique_id=1014479058 instance=ExtResource("7_hakhg")]
-position = Vector2(1436, -536)

@@ -1,4 +1,4 @@
-extends PopupPanel
+extends Node
 
 var deaths:=0
 var time_ms:=0

@@ -28,6 +28,10 @@ func _ready()->void:
 func _process(_delta: float) -> void:
 	$TextureProgressBar.value=$"sugar rush timer".time_left
 	$TextureProgressBar.tint_progress=Color.from_hsv($"sugar rush timer".time_left/6,1,1)
+	if Input.is_action_just_pressed("pause"):
+		var pause_screen=preload("res://scenes/pause screen/pause_screen.tscn").instantiate()
+		get_parent().add_child(pause_screen)
+		get_tree().paused=true
 
 func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("respawn") and not animating:
@@ -73,9 +77,9 @@ func _physics_process(delta: float) -> void:
 				#$"wall jump leiency".start()a
 				velocity.y=minf(velocity.y,WALL_SLIDE_SPEED)
 			else:
-				velocity.x = clampf(velocity.x+(direction * ACCEL * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)) * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),-MAX_SPEED * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),MAX_SPEED * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
+				velocity.x = clampf(velocity.x+(direction * ACCEL * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)) * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),-MAX_SPEED * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),MAX_SPEED * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
 		else:
-			velocity.x = move_toward(velocity.x, 0, ACCEL*delta*STOP_MULT * (1 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
+			velocity.x = move_toward(velocity.x, 0, ACCEL*delta*STOP_MULT * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
 
 	if not is_on_floor():
 		wall_normal=get_wall_check_normal()
@@ -120,10 +124,11 @@ func on_pickup(pickup:Area2D)->void:
 			pickup.disable()
 		&"end":
 			animating=true
-			var popup=preload("res://scenes/level end popup/level_end_popup.tscn").instantiate()
+			var popup_layer=preload("res://scenes/level end popup/level_end_popup.tscn").instantiate()
+			var popup=popup_layer.get_child(0)
 			popup.deaths=deaths
 			popup.time_ms=Time.get_ticks_msec()-start_time
-			get_parent().add_child(popup)
+			get_parent().add_child(popup_layer)
 
 func on_checkpoint()->void:
 	$"sugar rush timer".stop()

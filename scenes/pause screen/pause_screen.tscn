@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://ca2cupiw6lv8v"]
+
+[ext_resource type="Script" uid="uid://qetn258qcuc7" path="res://scenes/pause screen/pause_screen.gd" id="1_8chap"]
+[ext_resource type="FontFile" uid="uid://dhumwnibuj13y" path="res://assets/Kenney Pixel.ttf" id="2_4kpl4"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1065570568]
+
+[node name="Pause screen" type="PanelContainer" parent="." unique_id=796415663]
+process_mode = 3
+top_level = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -114.0
+offset_top = -50.0
+offset_right = 114.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8chap")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Pause screen" unique_id=585365210]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pause screen/VBoxContainer" unique_id=1084175708]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_4kpl4")
+theme_override_font_sizes/font_size = 48
+text = "Paused"
+horizontal_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Pause screen/VBoxContainer" unique_id=99092624]
+layout_mode = 2
+
+[node name="Title screen" type="Button" parent="Pause screen/VBoxContainer/HBoxContainer" unique_id=1319159850]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_4kpl4")
+theme_override_font_sizes/font_size = 32
+text = "Title Screen"
+
+[node name="Button2" type="Button" parent="Pause screen/VBoxContainer/HBoxContainer" unique_id=1889767740]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("2_4kpl4")
+theme_override_font_sizes/font_size = 32
+text = "Resume
+"
+
+[connection signal="pressed" from="Pause screen/VBoxContainer/HBoxContainer/Title screen" to="Pause screen" method="to_title"]
+[connection signal="pressed" from="Pause screen/VBoxContainer/HBoxContainer/Button2" to="Pause screen" method="close"]
