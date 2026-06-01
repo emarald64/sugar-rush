@@ -71,13 +71,17 @@ func _physics_process(delta: float) -> void:
 	if $"Freeze Direction Time".is_stopped():
 		var direction := Input.get_axis("move_left", "move_right")
 		#print(direction)
+		var adjusted_max_speed=MAX_SPEED * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT)
 		if direction:
 			if is_on_wall_only() and signf(get_wall_normal().x)==-signf(direction) and can_wall_jump:
 				# wall slide
 				#$"wall jump leiency".start()a
 				velocity.y=minf(velocity.y,WALL_SLIDE_SPEED)
 			else:
-				velocity.x = clampf(velocity.x+(direction * ACCEL * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)) * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),-MAX_SPEED * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),MAX_SPEED * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
+				if absf(velocity.x)>adjusted_max_speed:
+					move_toward(velocity.x,0,ACCEL*(.5 if signf(velocity.x)!=signf(direction) else STOP_MULT))
+				else:
+					velocity.x = clampf(velocity.x+(direction * ACCEL * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)) * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT),-adjusted_max_speed,adjusted_max_speed)
 		else:
 			velocity.x = move_toward(velocity.x, 0, ACCEL*delta*STOP_MULT * (1.0 if $"sugar rush timer".is_stopped() else SUGAR_RUSH_MULT))
 
