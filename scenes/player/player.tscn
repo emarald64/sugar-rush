@@ -189,6 +189,7 @@ fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(0.5, 0)
 
 [node name="Player" type="CharacterBody2D" unique_id=2106077790]
+z_index = 1
 collision_layer = 4
 floor_snap_length = 2.0
 platform_on_leave = 1
@@ -251,7 +252,7 @@ position = Vector2(11, 0)
 shape = SubResource("RectangleShape2D_gmlin")
 
 [node name="sugar rush timer" type="Timer" parent="." unique_id=1824299329]
-wait_time = 5.0
+wait_time = 4.0
 one_shot = true
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="." unique_id=1695372338]
@@ -261,7 +262,7 @@ offset_top = -26.0
 offset_right = 8.0
 offset_bottom = -10.0
 pivot_offset = Vector2(8, 8)
-max_value = 5.0
+max_value = 4.0
 step = 0.0
 fill_mode = 4
 texture_under = SubResource("GradientTexture2D_dovo2")

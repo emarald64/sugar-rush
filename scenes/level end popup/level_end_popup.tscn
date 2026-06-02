@@ -7,6 +7,18 @@
 Button/fonts/font = ExtResource("1_v1m66")
 Label/fonts/font = ExtResource("1_v1m66")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bmxg3"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.1, 0.1, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1588312200]
 
 [node name="Level End Popup" type="PanelContainer" parent="." unique_id=209659975]
@@ -22,6 +34,7 @@ offset_bottom = 48.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_bmxg3")
+theme_override_styles/panel = SubResource("StyleBoxFlat_bmxg3")
 script = ExtResource("2_bmxg3")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Level End Popup" unique_id=1902334999]
