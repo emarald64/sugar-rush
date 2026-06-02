@@ -2,7 +2,7 @@ extends Node
 
 var deaths:=0
 var time_ms:=0
-var level:Node2D
+var level_index:int
 
 func _ready()->void:
 	$VBoxContainer/Counters.text="Deaths: "+str(deaths)+"      Time: "+formatTime(time_ms)
@@ -11,7 +11,7 @@ func level_select() -> void:
 	get_tree().call_deferred(&"change_scene_to_file","res://scenes/title/title_screen.tscn")
 
 func next_level() -> void:
-	get_tree().call_deferred(&"change_scene_to_file","res://scenes/levels/"+str(level.get_meta(&"level_index")+1)+".tscn")
+	get_tree().call_deferred(&"change_scene_to_file","res://scenes/levels/"+str(+1)+".tscn")
 
 static func formatTime(time:int)-> String:
 	var msec=floori(time%1000/10.0)

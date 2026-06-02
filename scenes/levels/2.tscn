@@ -581,7 +581,7 @@ theme_override_fonts/font = ExtResource("7_souht")
 text = "You found a secret!"
 
 [connection signal="body_entered" from="TileMapLayer/Checkpoint" to="TileMapLayer/Checkpoint" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@74508" to="TileMapLayer/@Area2D@74508" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@74510" to="TileMapLayer/@Area2D@74510" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@105433" to="TileMapLayer/@Area2D@105433" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@105435" to="TileMapLayer/@Area2D@105435" method="activate"]
 
 [editable path="Level end flag2"]

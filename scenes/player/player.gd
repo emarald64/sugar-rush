@@ -133,8 +133,20 @@ func on_pickup(pickup:Area2D)->void:
 			animating=true
 			var popup_layer=preload("res://scenes/level end popup/level_end_popup.tscn").instantiate()
 			var popup=popup_layer.get_child(0)
-			var time=Time.get_ticks_msec()-start_time
-			popup.level=level
+			var time:=Time.get_ticks_msec()-start_time
+			var level_index:int=level.get_meta(&"level_index")
+			
+			if TitleScreen.death_counts[level_index-1]==0:
+				TitleScreen.death_counts[level_index-1]=deaths
+			else:
+				TitleScreen.death_counts[level_index-1]=mini(TitleScreen.death_counts[level_index-1],deaths)
+			
+			if TitleScreen.level_times[level_index-1]==0:
+				TitleScreen.level_times[level_index-1]=time
+			else:
+				TitleScreen.level_times[level_index-1]=mini(TitleScreen.level_times[level_index-1],time)
+			
+			popup.level_index=level_index
 			popup.deaths=deaths
 			popup.time_ms=time
 			get_parent().add_child(popup_layer)

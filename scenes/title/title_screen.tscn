@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://bmq71jyyvbj8d" path="res://scenes/title/title_screen.gd" id="1_ynr0n"]
 [ext_resource type="Texture2D" uid="uid://b4wshm4lqj1qm" path="res://assets/kenney_pixel-ui-pack/Colored/blue_pressed.png" id="2_qrms8"]
 [ext_resource type="Texture2D" uid="uid://cu70tfbedqswj" path="res://assets/kenney_pixel-ui-pack/Colored/blue.png" id="3_iowo3"]
+[ext_resource type="Texture2D" uid="uid://du15kvr3byhdn" path="res://assets/skull.png" id="5_8xedo"]
+[ext_resource type="Texture2D" uid="uid://droumy7m4hlge" path="res://assets/check.png" id="5_iy4b5"]
+[ext_resource type="Texture2D" uid="uid://bo4h13nrs3b1t" path="res://assets/time.png" id="6_84bpe"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qrms8"]
 texture = ExtResource("3_iowo3")
@@ -37,6 +40,8 @@ texture_margin_bottom = 4.0
 Button/styles/hover = SubResource("StyleBoxTexture_qrms8")
 Button/styles/normal = SubResource("StyleBoxTexture_8xedo")
 Button/styles/pressed = SubResource("StyleBoxTexture_84bpe")
+Label/font_sizes/font_size = 32
+Label/fonts/font = ExtResource("1_05wk3")
 
 [node name="Title Screen" type="ColorRect" unique_id=1700240834]
 anchors_preset = 15
@@ -57,6 +62,7 @@ offset_left = 28.0
 offset_right = -28.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 28
 
 [node name="Label" type="Label" parent="VBoxContainer" unique_id=2137879027]
 layout_mode = 2
@@ -65,28 +71,166 @@ theme_override_fonts/font = ExtResource("1_05wk3")
 theme_override_font_sizes/font_size = 64
 text = "Sugar Rush"
 
-[node name="Spacer" type="Control" parent="VBoxContainer" unique_id=2076824011]
-custom_minimum_size = Vector2(0, 24)
+[node name="levels" type="VBoxContainer" parent="VBoxContainer" unique_id=306172753]
+unique_name_in_owner = true
 layout_mode = 2
-
-[node name="levels" type="GridContainer" parent="VBoxContainer" unique_id=1125918774]
-layout_mode = 2
-theme_override_constants/h_separation = 16
-columns = 5
 
 [node name="1" type="Button" parent="VBoxContainer/levels" unique_id=1359384328]
-custom_minimum_size = Vector2(24, 0)
+custom_minimum_size = Vector2(0, 48)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_05wk3")
 theme_override_font_sizes/font_size = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/levels/1" unique_id=532282629]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = 1.0
+offset_right = -3.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="check" type="TextureRect" parent="VBoxContainer/levels/1/HBoxContainer" unique_id=323865614]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("5_iy4b5")
+stretch_mode = 2
+
+[node name="name" type="Label" parent="VBoxContainer/levels/1/HBoxContainer" unique_id=556812992]
+layout_mode = 2
 text = "Level 1"
 
+[node name="on_complete" type="HBoxContainer" parent="VBoxContainer/levels/1/HBoxContainer" unique_id=626075877]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/levels/1/HBoxContainer/on_complete" unique_id=1768742066]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("5_8xedo")
+expand_mode = 4
+
+[node name="Death Count" type="Label" parent="VBoxContainer/levels/1/HBoxContainer/on_complete" unique_id=153739915]
+layout_mode = 2
+text = ": 0"
+
+[node name="Control" type="Control" parent="VBoxContainer/levels/1/HBoxContainer/on_complete" unique_id=975424872]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/levels/1/HBoxContainer/on_complete" unique_id=51711946]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("6_84bpe")
+expand_mode = 4
+
+[node name="Time" type="Label" parent="VBoxContainer/levels/1/HBoxContainer/on_complete" unique_id=1317641087]
+layout_mode = 2
+text = ": 0"
+
 [node name="2" type="Button" parent="VBoxContainer/levels" unique_id=1374001166]
-custom_minimum_size = Vector2(24, 0)
+custom_minimum_size = Vector2(24, 48)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_05wk3")
 theme_override_font_sizes/font_size = 32
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/levels/2" unique_id=1090557492]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = 1.0
+offset_right = -3.0
+offset_bottom = -7.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="check" type="TextureRect" parent="VBoxContainer/levels/2/HBoxContainer" unique_id=14414586]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+texture = ExtResource("5_iy4b5")
+stretch_mode = 2
+
+[node name="name" type="Label" parent="VBoxContainer/levels/2/HBoxContainer" unique_id=1386690802]
+layout_mode = 2
 text = "Level 2"
+
+[node name="on_complete" type="HBoxContainer" parent="VBoxContainer/levels/2/HBoxContainer" unique_id=875745739]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/levels/2/HBoxContainer/on_complete" unique_id=1435241525]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("5_8xedo")
+expand_mode = 4
+
+[node name="Death Count" type="Label" parent="VBoxContainer/levels/2/HBoxContainer/on_complete" unique_id=93681608]
+layout_mode = 2
+text = ": 0"
+
+[node name="Control" type="Control" parent="VBoxContainer/levels/2/HBoxContainer/on_complete" unique_id=2045188778]
+custom_minimum_size = Vector2(4, 0)
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/levels/2/HBoxContainer/on_complete" unique_id=814380007]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("6_84bpe")
+expand_mode = 4
+
+[node name="Time" type="Label" parent="VBoxContainer/levels/2/HBoxContainer/on_complete" unique_id=1696962137]
+layout_mode = 2
+text = ": 0"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1643104916]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/HBoxContainer" unique_id=885826063]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("5_8xedo")
+
+[node name="DeathCount" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=3037114]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_05wk3")
+theme_override_font_sizes/font_size = 32
+text = "Deaths: "
+
+[node name="Spacer" type="Control" parent="VBoxContainer/HBoxContainer" unique_id=1889179944]
+layout_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="VBoxContainer/HBoxContainer" unique_id=860326691]
+texture_filter = 1
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+texture = ExtResource("6_84bpe")
+expand_mode = 4
+
+[node name="TotalTime" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=14017944]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_fonts/font = ExtResource("1_05wk3")
+theme_override_font_sizes/font_size = 32
+text = "Time: "
 
 [connection signal="pressed" from="VBoxContainer/levels/1" to="." method="load_level" flags=18]
 [connection signal="pressed" from="VBoxContainer/levels/2" to="." method="load_level" flags=18]
