@@ -18,9 +18,12 @@ var started_timer:=false
 var hasJumped:=false
 #@export var can_wall_jump:=true
 var deaths:=0
+@export var noclip:=false
+var used_noclip:=false
+
 @onready var start_time:=Time.get_ticks_msec()
 @onready var level:=get_parent()
-@onready var sugar_rust_timer:=$"sugar rush timer"
+@onready var sugar_rush_timer:=$"sugar rush timer"
 
 @onready var current_cp:Node2D=$StartPos
 
@@ -28,8 +31,8 @@ func _ready()->void:
 	$StartPos.position=global_position
 
 func _process(_delta: float) -> void:
-	$TextureProgressBar.value=sugar_rust_timer.time_left
-	$TextureProgressBar.tint_progress=Color.from_hsv(sugar_rust_timer.time_left/4.5,1,1)
+	$TextureProgressBar.value=sugar_rush_timer.time_left
+	$TextureProgressBar.tint_progress=Color.from_hsv(sugar_rush_timer.time_left/4.5,1,1)
 	if Input.is_action_just_pressed("pause"):
 		var pause_screen=preload("res://scenes/pause screen/pause_screen.tscn").instantiate()
 		get_parent().add_child(pause_screen)
@@ -37,6 +40,12 @@ func _process(_delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not animating:
+		if Input.is_action_just_pressed("noclip"):
+			used_noclip=true
+			noclip=not noclip
+			collision_mask^=1
+			$Hurtbox.collision_mask^=2
+		
 		if Input.is_action_just_pressed("respawn"):
 			play_respawn_animation()
 		
@@ -53,7 +62,7 @@ func _physics_process(delta: float) -> void:
 			$"Freeze Direction Time".stop()
 				
 		# Handle jump.
-		if Input.is_action_just_pressed("jump") and (is_on_floor() or not $coyoteTimer.is_stopped()):
+		if Input.is_action_just_pressed("jump") and (is_on_floor() or not $coyoteTimer.is_stopped() or noclip):
 			velocity.y=minf(JUMP_VELOCITY,velocity.y)
 			$coyoteTimer.stop()
 			hasJumped=true
@@ -72,26 +81,26 @@ func _physics_process(delta: float) -> void:
 		if $"Freeze Direction Time".is_stopped():
 			var direction := Input.get_axis("move_left", "move_right")
 			#print(direction)
-			var active_sugar_mult:=(1.0 if sugar_rust_timer.is_stopped() else SUGAR_RUSH_MULT)
+			var active_sugar_mult:=(1.0 if sugar_rush_timer.is_stopped() else SUGAR_RUSH_MULT)
 			var adjusted_max_speed:=MAX_SPEED * active_sugar_mult
 			var adjusted_accel:=ACCEL * active_sugar_mult
 			if direction:
-				if is_on_wall_only() and signf(get_wall_normal().x)==-signf(direction) and not sugar_rust_timer.is_stopped():
+				if is_on_wall_only() and signf(get_wall_normal().x)==-signf(direction) and not sugar_rush_timer.is_stopped():
 					# wall slide
 					#$"wall jump leiency".start()a
 					velocity.y=minf(velocity.y,WALL_SLIDE_SPEED)
 				else:
 					if absf(velocity.x)>adjusted_max_speed:
-						move_toward(velocity.x,0,ACCEL*(.5 if signf(velocity.x)!=signf(direction) else STOP_MULT))
+						velocity.x=move_toward(velocity.x,0,delta*ACCEL*(.5 if signf(velocity.x)==signf(direction) else STOP_MULT*active_sugar_mult))
 					else:
-						velocity.x = clampf(velocity.x+(direction * adjusted_accel * delta * (1 if signf(direction)==signf(velocity.x) else STOP_MULT)),-adjusted_max_speed,adjusted_max_speed)
+						velocity.x = clampf(velocity.x+(direction * adjusted_accel * delta * (1.0 if signf(direction)==signf(velocity.x) else STOP_MULT*active_sugar_mult)),-adjusted_max_speed,adjusted_max_speed)
 			else:
-				velocity.x = move_toward(velocity.x, 0, adjusted_accel*delta*STOP_MULT)
+				velocity.x = move_toward(velocity.x, 0, adjusted_accel*delta*STOP_MULT*active_sugar_mult)
 
 		if not is_on_floor():
 			wall_normal=get_wall_check_normal()
 			#print(wall_normal)
-			if wall_normal!=0 and not sugar_rust_timer.is_stopped():
+			if wall_normal!=0 and not sugar_rush_timer.is_stopped():
 				if Input.is_action_just_pressed("jump"):
 					# wall jump
 					$"Freeze Direction Time".start()
@@ -107,18 +116,18 @@ func get_wall_check_normal()->int:
 	return 0
 
 func play_respawn_animation()->void:
-	sugar_rust_timer.paused=true
+	sugar_rush_timer.paused=true
 	$AnimationPlayer.play(&"death")
 
 func respawn()->void:
-	sugar_rust_timer.paused=false
-	sugar_rust_timer.stop()
+	sugar_rush_timer.paused=false
+	sugar_rush_timer.stop()
 	#$TextureProgressBar.scale=Vector2.ONE
 	$TextureProgressBar.hide()
 	global_position=current_cp.global_position
 	$Polygon2D.scale=Vector2.ONE
 	velocity=Vector2.ZERO
-	get_tree().call_group(&"enable on respawn",&"enable")
+	get_tree().call_group(&"reset on respawn",&"reset")
 	deaths+=1
 	
 	$Camera2D.align()
@@ -126,7 +135,7 @@ func respawn()->void:
 func on_pickup(pickup:Area2D)->void:
 	match pickup.get_meta(&"pickup"):
 		&"candy":
-			sugar_rust_timer.start()
+			sugar_rush_timer.start()
 			$TextureProgressBar.show()
 			pickup.disable()
 		&"end":
@@ -136,21 +145,20 @@ func on_pickup(pickup:Area2D)->void:
 			var time:=Time.get_ticks_msec()-start_time
 			var level_index:int=level.get_meta(&"level_index")
 			
-			if TitleScreen.death_counts[level_index-1]==0:
-				TitleScreen.death_counts[level_index-1]=deaths
-			else:
-				TitleScreen.death_counts[level_index-1]=mini(TitleScreen.death_counts[level_index-1],deaths)
+			if not used_noclip:
+				if TitleScreen.level_times[level_index-1]==0:
+					TitleScreen.death_counts[level_index-1]=deaths
+					TitleScreen.level_times[level_index-1]=time
+				else:
+					TitleScreen.level_times[level_index-1]=mini(TitleScreen.level_times[level_index-1],time)
+					TitleScreen.death_counts[level_index-1]=mini(TitleScreen.death_counts[level_index-1],deaths)
 			
-			if TitleScreen.level_times[level_index-1]==0:
-				TitleScreen.level_times[level_index-1]=time
-			else:
-				TitleScreen.level_times[level_index-1]=mini(TitleScreen.level_times[level_index-1],time)
-			
-			popup.level_index=level_index
 			popup.deaths=deaths
 			popup.time_ms=time
-			get_parent().add_child(popup_layer)
+			popup.level_index=level_index
+			popup.used_noclip=used_noclip
+			level.add_child(popup_layer)
 
 func on_checkpoint()->void:
-	sugar_rust_timer.stop()
+	sugar_rush_timer.stop()
 	$TextureProgressBar.hide()

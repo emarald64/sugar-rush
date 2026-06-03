@@ -2,7 +2,7 @@ class_name TitleScreen extends ColorRect
 
 static var level_times:PackedInt32Array=PackedInt32Array()
 static var death_counts:PackedInt32Array=PackedInt32Array()
-const level_count=2
+const level_count=3
 
 static func _static_init() -> void:
 	level_times.resize(level_count)
@@ -22,7 +22,8 @@ func _ready() -> void:
 			on_complete.get_node("Death Count").text=": "+str(death_counts[level])
 			on_complete.get_node("Time").text=": "+formatTime(level_times[level])
 			
-	%DeathCount.text="Deaths: "
+	%DeathCount.text="Deaths: "+str(total_deaths)
+	%TotalTime.text="Time: "+formatTime(total_time)
 
 func load_level(button)->void:
 	get_tree().change_scene_to_file("res://scenes/levels/"+button.name+".tscn")

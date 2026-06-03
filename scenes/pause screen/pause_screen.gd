@@ -1,7 +1,7 @@
 extends Node
 
 func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("ui_cancel"):
 		close()
 
 func close()->void:
@@ -11,3 +11,7 @@ func close()->void:
 func to_title()->void:
 	get_tree().paused=false
 	get_tree().call_deferred(&"change_scene_to_file","res://scenes/title/title_screen.tscn")
+
+func restart()->void:
+	get_tree().paused=false
+	get_tree().reload_current_scene()

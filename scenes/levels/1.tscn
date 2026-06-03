@@ -491,7 +491,7 @@ tile_set = SubResource("TileSet_k2fmo")
 
 [node name="Player" parent="." unique_id=2106077790 instance=ExtResource("5_x6e36")]
 position = Vector2(100, 10)
-can_wall_jump = false
+moonjump = true
 
 [node name="Sugar Rush Explanation" type="PanelContainer" parent="." unique_id=1446007973]
 offset_left = 1468.0
@@ -526,7 +526,7 @@ shape = SubResource("SegmentShape2D_ow5a4")
 position = Vector2(1436, -536)
 
 [connection signal="body_entered" from="TileMapLayer/Checkpoint" to="TileMapLayer/Checkpoint" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@65001" to="TileMapLayer/@Area2D@65001" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@65002" to="TileMapLayer/@Area2D@65002" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@65003" to="TileMapLayer/@Area2D@65003" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@65004" to="TileMapLayer/@Area2D@65004" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@36214" to="TileMapLayer/@Area2D@36214" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@36215" to="TileMapLayer/@Area2D@36215" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@36216" to="TileMapLayer/@Area2D@36216" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@36217" to="TileMapLayer/@Area2D@36217" method="activate"]

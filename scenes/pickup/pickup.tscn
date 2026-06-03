@@ -6,7 +6,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7cqbe"]
 size = Vector2(18, 18)
 
-[node name="Pickup" type="Area2D" unique_id=394415085 groups=["enable on respawn"]]
+[node name="Pickup" type="Area2D" unique_id=394415085 groups=["reset on respawn"]]
 collision_layer = 8
 collision_mask = 0
 monitoring = false

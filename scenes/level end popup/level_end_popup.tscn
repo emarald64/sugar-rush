@@ -49,20 +49,34 @@ horizontal_alignment = 1
 [node name="Counters" type="Label" parent="Level End Popup/VBoxContainer" unique_id=376579435]
 layout_mode = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Level End Popup/VBoxContainer" unique_id=1724874632]
-layout_mode = 2
-
-[node name="Level Select" type="Button" parent="Level End Popup/VBoxContainer/HBoxContainer" unique_id=1117750032]
+[node name="Next Level" type="Button" parent="Level End Popup/VBoxContainer" unique_id=158164663]
 layout_mode = 2
 size_flags_horizontal = 3
-theme_override_font_sizes/font_size = 32
-text = "Level Select"
-
-[node name="Next Level" type="Button" parent="Level End Popup/VBoxContainer/HBoxContainer" unique_id=158164663]
-layout_mode = 2
-size_flags_horizontal = 3
+focus_neighbor_bottom = NodePath("../Restart")
+focus_next = NodePath("../Restart")
 theme_override_font_sizes/font_size = 32
 text = "Next"
 
-[connection signal="pressed" from="Level End Popup/VBoxContainer/HBoxContainer/Level Select" to="Level End Popup" method="level_select"]
-[connection signal="pressed" from="Level End Popup/VBoxContainer/HBoxContainer/Next Level" to="Level End Popup" method="next_level"]
+[node name="Restart" type="Button" parent="Level End Popup/VBoxContainer" unique_id=1369386429]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../Next Level")
+focus_neighbor_bottom = NodePath("../Level Select")
+focus_next = NodePath("../Level Select")
+focus_previous = NodePath("../Next Level")
+theme_override_font_sizes/font_size = 32
+text = "Restart"
+
+[node name="Level Select" type="Button" parent="Level End Popup/VBoxContainer" unique_id=1117750032]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_neighbor_top = NodePath("../Restart")
+focus_previous = NodePath("../Restart")
+theme_override_font_sizes/font_size = 32
+text = "Level Select"
+
+[connection signal="pressed" from="Level End Popup/VBoxContainer/Next Level" to="Level End Popup" method="next_level"]
+[connection signal="ready" from="Level End Popup/VBoxContainer/Next Level" to="Level End Popup/VBoxContainer/Next Level" method="grab_focus"]
+[connection signal="pressed" from="Level End Popup/VBoxContainer/Restart" to="Level End Popup" method="restart"]
+[connection signal="ready" from="Level End Popup/VBoxContainer/Restart" to="Level End Popup/VBoxContainer/Restart" method="grab_focus"]
+[connection signal="pressed" from="Level End Popup/VBoxContainer/Level Select" to="Level End Popup" method="level_select"]
