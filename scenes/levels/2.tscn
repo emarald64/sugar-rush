@@ -538,7 +538,7 @@ tile_map_data = PackedByteArray("AAAAAAAAAQALAAAAAAABAAAAAQALAAAAAAACAAAAAQAMAAA
 direction = Vector2(-450, 0)
 period = 8.0
 loop = false
-delay = 5.0
+delay = 4.0
 
 [node name="Sugar Rush Explanation" type="PanelContainer" parent="." unique_id=1320437723]
 offset_left = 1224.0
@@ -567,6 +567,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 16, 32)
 
 [node name="Checker" parent="Level end flag2/Sprite2D3" index="0" unique_id=1912149117]
+position = Vector2(-1, 0)
 scale = Vector2(4, 4)
 
 [node name="CollisionShape2D" parent="Level end flag2" index="1" unique_id=1259893382]
@@ -580,8 +581,43 @@ offset_bottom = -306.0
 theme_override_fonts/font = ExtResource("7_souht")
 text = "You found a secret!"
 
-[connection signal="body_entered" from="TileMapLayer/Checkpoint" to="TileMapLayer/Checkpoint" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@23751" to="TileMapLayer/@Area2D@23751" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@23753" to="TileMapLayer/@Area2D@23753" method="activate"]
+[node name="Line2D" type="Line2D" parent="." unique_id=1332419797]
+z_index = -1
+points = PackedVector2Array(963, 27, 963, -63)
+width = 2.0
+
+[node name="Line2D2" type="Line2D" parent="." unique_id=1797472339]
+z_index = -1
+position = Vector2(90, 72)
+points = PackedVector2Array(963, 27, 963, -63)
+width = 2.0
+
+[node name="Line2D3" type="Line2D" parent="." unique_id=2050794502]
+z_index = -1
+position = Vector2(162, 0)
+points = PackedVector2Array(963, 27, 963, -63)
+width = 2.0
+
+[node name="Line2D4" type="Line2D" parent="." unique_id=915799193]
+z_index = -1
+position = Vector2(-504, -18)
+points = PackedVector2Array(963, 27, 1053, 27)
+width = 2.0
+
+[node name="Line2D5" type="Line2D" parent="." unique_id=1573226993]
+z_index = -1
+position = Vector2(-180, -72)
+points = PackedVector2Array(963, 27, 1035, 27)
+width = 2.0
+
+[node name="Line2D6" type="Line2D" parent="." unique_id=2046344035]
+z_index = -1
+position = Vector2(531, -360)
+points = PackedVector2Array(522, -63, 963, -63)
+width = 2.0
+
+[connection signal="body_entered" from="TileMapLayer/@Area2D@73311" to="TileMapLayer/@Area2D@73311" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@73312" to="TileMapLayer/@Area2D@73312" method="activate"]
+[connection signal="body_entered" from="TileMapLayer/@Area2D@73315" to="TileMapLayer/@Area2D@73315" method="activate"]
 
 [editable path="Level end flag2"]

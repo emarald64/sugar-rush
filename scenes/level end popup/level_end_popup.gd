@@ -7,7 +7,8 @@ var used_noclip:=false
 
 func _ready()->void:
 	if level_index>=TitleScreen.level_count:
-		$"VBoxContainer/HBoxContainer/Next Level".hide()
+		$"VBoxContainer/Next Level".hide()
+		$"VBoxContainer/Level Select".grab_focus()
 	$VBoxContainer/Counters.text="Deaths: "+str(deaths)+"      Time: "+formatTime(time_ms)
 	if used_noclip:
 		$VBoxContainer/Counters.text+="   used noclip"

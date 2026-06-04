@@ -2,11 +2,21 @@ class_name TitleScreen extends ColorRect
 
 static var level_times:PackedInt32Array=PackedInt32Array()
 static var death_counts:PackedInt32Array=PackedInt32Array()
-const level_count=3
+const level_count=2
+const save_path="user://save"
 
 static func _static_init() -> void:
 	level_times.resize(level_count)
 	death_counts.resize(level_count)
+	
+	# load save
+	if FileAccess.file_exists(save_path) and FileAccess.get_size(save_path)==level_count*8:
+		print("save exists")
+		var save_file=FileAccess.open(save_path,FileAccess.READ)
+		for i in range(level_count):
+			level_times[i]=save_file.get_32()
+		for i in range(level_count):
+			death_counts[i]=save_file.get_32()
 
 func _ready() -> void:
 	var total_time:=0
@@ -27,6 +37,13 @@ func _ready() -> void:
 
 func load_level(button)->void:
 	get_tree().change_scene_to_file("res://scenes/levels/"+button.name+".tscn")
+
+static func save()->void:
+	var save_file=FileAccess.open(save_path,FileAccess.WRITE)
+	for time in level_times:
+		save_file.store_32(time)
+	for deaths in death_counts:
+		save_file.store_32(deaths)
 
 static func formatTime(time:int)-> String:
 	var msec=floori(time%1000/10.0)

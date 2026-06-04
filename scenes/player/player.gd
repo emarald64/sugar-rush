@@ -3,7 +3,7 @@ class_name Player extends CharacterBody2D
 const MAX_SPEED = 225.0
 const ACCEL = 450
 const JUMP_VELOCITY = -250.0
-const JUMP_ACCEL = -950.0
+const JUMP_ACCEL = -1000.0
 const MAX_JUMP_TIME=.3
 const STOP_MULT=3;
 const MAX_FALL_SPEED=1000;
@@ -152,7 +152,7 @@ func on_pickup(pickup:Area2D)->void:
 				else:
 					TitleScreen.level_times[level_index-1]=mini(TitleScreen.level_times[level_index-1],time)
 					TitleScreen.death_counts[level_index-1]=mini(TitleScreen.death_counts[level_index-1],deaths)
-			
+				TitleScreen.save()
 			popup.deaths=deaths
 			popup.time_ms=time
 			popup.level_index=level_index

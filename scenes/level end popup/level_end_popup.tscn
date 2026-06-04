@@ -78,5 +78,4 @@ text = "Level Select"
 [connection signal="pressed" from="Level End Popup/VBoxContainer/Next Level" to="Level End Popup" method="next_level"]
 [connection signal="ready" from="Level End Popup/VBoxContainer/Next Level" to="Level End Popup/VBoxContainer/Next Level" method="grab_focus"]
 [connection signal="pressed" from="Level End Popup/VBoxContainer/Restart" to="Level End Popup" method="restart"]
-[connection signal="ready" from="Level End Popup/VBoxContainer/Restart" to="Level End Popup/VBoxContainer/Restart" method="grab_focus"]
 [connection signal="pressed" from="Level End Popup/VBoxContainer/Level Select" to="Level End Popup" method="level_select"]

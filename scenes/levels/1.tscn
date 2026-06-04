@@ -491,20 +491,19 @@ tile_set = SubResource("TileSet_k2fmo")
 
 [node name="Player" parent="." unique_id=2106077790 instance=ExtResource("5_x6e36")]
 position = Vector2(100, 10)
-moonjump = true
 
 [node name="Sugar Rush Explanation" type="PanelContainer" parent="." unique_id=1446007973]
 offset_left = 1468.0
 offset_top = -274.0
-offset_right = 1619.0
-offset_bottom = -195.0
+offset_right = 1622.0
+offset_bottom = -209.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_ow5a4")
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Sugar Rush Explanation" unique_id=1569170862]
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("6_djhl7")
 bbcode_enabled = true
-text = "Picking up a [img]res://assets/candy.png[/img] will give you a Sugar Rush, causing you to move fater but die if you dont touch a checkpoint"
+text = "Picking up a [img]res://assets/candy.png[/img] will give you a Sugar Rush, causing you to move faster but die if you don't touch a checkpoint"
 scroll_active = false
 shortcut_keys_enabled = false
 custom_effects = [null]
@@ -524,9 +523,3 @@ shape = SubResource("SegmentShape2D_ow5a4")
 
 [node name="Level end flag" parent="." unique_id=1014479058 instance=ExtResource("7_kpjit")]
 position = Vector2(1436, -536)
-
-[connection signal="body_entered" from="TileMapLayer/Checkpoint" to="TileMapLayer/Checkpoint" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@36214" to="TileMapLayer/@Area2D@36214" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@36215" to="TileMapLayer/@Area2D@36215" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@36216" to="TileMapLayer/@Area2D@36216" method="activate"]
-[connection signal="body_entered" from="TileMapLayer/@Area2D@36217" to="TileMapLayer/@Area2D@36217" method="activate"]

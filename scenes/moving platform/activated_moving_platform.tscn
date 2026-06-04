@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://c0r55e58rgglh"]
+
+[ext_resource type="Texture2D" uid="uid://b23lqyoitg46d" path="res://assets/kenney_pixel-platformer/Tiles/tile_0030.png" id="1_djnf4"]
+[ext_resource type="Script" uid="uid://d2732npgd8eib" path="res://scenes/moving platform/activated_moving_platform.gd" id="1_w4nyk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4nyk"]
+size = Vector2(72, 18)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tbt8f"]
+size = Vector2(72, 1)
+
+[node name="activated moving platform" type="AnimatableBody2D" unique_id=1993868842 groups=["reset on respawn"]]
+collision_mask = 0
+script = ExtResource("1_w4nyk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1713428990]
+position = Vector2(36, 9)
+shape = SubResource("RectangleShape2D_w4nyk")
+
+[node name="PlayerDetector" type="Area2D" parent="." unique_id=1475968767]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetector" unique_id=1337695893]
+position = Vector2(36, -0.5)
+shape = SubResource("RectangleShape2D_tbt8f")
+
+[node name="Start Return Timer" type="Timer" parent="." unique_id=871697572]
+one_shot = true
+
+[node name="Reset Timer" type="Timer" parent="." unique_id=1703124762]
+one_shot = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1038232146]
+texture_filter = 1
+texture_repeat = 2
+texture = ExtResource("1_djnf4")
+centered = false
+region_enabled = true
+region_rect = Rect2(0, 0, 72, 18)
+
+[connection signal="body_entered" from="PlayerDetector" to="." method="activate" unbinds=1]
+[connection signal="timeout" from="Start Return Timer" to="." method="start_return"]
+[connection signal="timeout" from="Reset Timer" to="." method="reset"]

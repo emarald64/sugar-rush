@@ -9,9 +9,11 @@ func close()->void:
 	queue_free()
 
 func to_title()->void:
-	get_tree().paused=false
-	get_tree().call_deferred(&"change_scene_to_file","res://scenes/title/title_screen.tscn")
+	var tree=get_tree()
+	tree.paused=false
+	tree.call_deferred(&"change_scene_to_file","res://scenes/title/title_screen.tscn")
 
 func restart()->void:
-	get_tree().paused=false
-	get_tree().reload_current_scene()
+	var tree=get_tree()
+	tree.paused=false
+	tree.reload_current_scene()
